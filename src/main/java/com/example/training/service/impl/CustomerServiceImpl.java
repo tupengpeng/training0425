@@ -30,6 +30,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Autowired
     private CustomerMapper customerMapper;
 
+    @Override
     public List<Customer> getCustomtoLogin(Customer cs) {
         QueryWrapper<Customer> qw = new QueryWrapper<>();
         qw.eq("id",cs.getId());
