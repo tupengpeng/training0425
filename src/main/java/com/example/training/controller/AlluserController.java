@@ -44,7 +44,7 @@ public class AlluserController {
     public Result getcourse(@RequestBody Course cs,@RequestParam(defaultValue = "1") Integer page,
                                   @RequestParam(defaultValue = "10") Integer pageSize){
         log.info("获取课程列表");
-        log.info("分页查询, 参数: {},{}",page,pageSize);
+        log.info("课程分页查询, 参数: {},{}",page,pageSize);
         PageBean pageBean = iCourseService.getCourse(cs,page,pageSize);
         return Result.success(pageBean);
     }
