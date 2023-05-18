@@ -3,8 +3,6 @@ package com.example.training;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +36,7 @@ public class GenerationTests {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, "C:/Users/Administrator/Desktop/实训/training-workplace/src/main/java/com/example/training")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("enrollment_plan"); // 设置需要生成的表名
+                    builder.addInclude("comment"); // 设置需要生成的表名
                            // .addTablePrefix("t_", "c_"); // 设置过滤表前缀
                 })
                 //.templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板

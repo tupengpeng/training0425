@@ -26,6 +26,10 @@ public class CusLoginInterceptor implements HandlerInterceptor {
         if(url.contains("customer")||url.contains("login")){
             log.info("cus登录操作, 放行");
             return true;
+        }//判断是否为cus的专属操作
+        else if (!url.contains("customer")){
+            log.info("非cus操作, 放行");
+            return true;
         }
 
         //3.获取请求头中的令牌（token）。

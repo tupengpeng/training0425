@@ -17,4 +17,10 @@ public interface ICustomerService extends IService<Customer> {
 
     public List<Customer> getCustomtoLogin(Customer cs);
 
+    public boolean updateInf(Customer cs);
+
+    public boolean insertInf(Customer cs);
+
+    public List<Customer> query(Customer cs);
+
 }
