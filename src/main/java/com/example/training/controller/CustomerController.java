@@ -1,9 +1,6 @@
 package com.example.training.controller;
 
-import com.example.training.entity.Course;
-import com.example.training.entity.Customer;
-import com.example.training.entity.Intention;
-import com.example.training.entity.Result;
+import com.example.training.entity.*;
 import com.example.training.service.*;
 import com.example.training.utility.JwtUtils;
 import io.jsonwebtoken.Claims;
@@ -30,18 +27,20 @@ import java.util.Map;
 @RequestMapping("/customer")
 public class CustomerController {
 
-
+    @Autowired
     private ICustomerService iCustomerService;
     @Autowired
     private IIntentionService iIntentionService;
     @Autowired
     private ICommentService iCommentService;
 
+    //test
     @GetMapping("/hello")
     public String hello(){
         return "hello !";
     }
 
+    //注册
     @PostMapping("/register")
     public Result register(@RequestBody Customer cs){
         log.info("Cus注册",cs);
@@ -51,6 +50,7 @@ public class CustomerController {
         return Result.error("账号已存在");
     }
 
+    //登录
     @PostMapping("/login")
     public Result login(@RequestBody Customer cs){
         log.info("Cus登录",cs);
@@ -70,14 +70,15 @@ public class CustomerController {
         return Result.error("用户名不存在或密码错误");
     }
 
+    //登出
     @PostMapping("/loginout")
     //注销时从客户端删除存储的Token
     public Result loginout(){
         return Result.success();
     }
 
-
-    @GetMapping("/query")
+    //对自己信息进行查询
+    @PostMapping("/query")
     public Result query(@RequestBody Customer cs){
         log.info("Cus信息查询",cs);
         if(iCustomerService.query(cs)!=null){
@@ -87,6 +88,7 @@ public class CustomerController {
         return Result.error("Cus信息查询失败");
     }
 
+    //更新自己的信息
     @PostMapping("/updateInf")
     public Result updateInf(@RequestBody Customer cs){
         log.info("Cus信息修改",cs);
@@ -97,7 +99,7 @@ public class CustomerController {
         return Result.error("Cus信息修改失败");
     }
 
-
+    //申请上课
     @PostMapping("/applyforclasses")
     public Result applyforclasses(@RequestBody Customer cs,@RequestBody Course cou){
         log.info("Cus申请上课",cs);
@@ -108,6 +110,7 @@ public class CustomerController {
         return Result.error("Cus申请上课失败");
     }
 
+    //删除试听记录
     @PostMapping("/deleteclasses")
     public Result deleteclasses(@RequestBody Customer cs,@RequestBody Course cou){
         log.info("Cus删除记录",cs);
@@ -118,7 +121,7 @@ public class CustomerController {
         return Result.error("Cus删除试听记录失败");
     }
 
-
+    //给课程评分
     @PostMapping("/gradeclasses")
     public Result gradeclasses(@RequestBody Customer cs,@RequestBody Course cou,String evaluation){
         log.info("Cus给课程评分",cs);
@@ -129,7 +132,7 @@ public class CustomerController {
         return Result.error("Cus给课程评分失败");
     }
 
-    //根据课程名字进行模糊查询
+    //给课程评论
     @PostMapping("/commentclass")
     public Result commentclass(@RequestBody Intention it, String comment){
         log.info("Cus给课程评论",comment);
@@ -138,6 +141,16 @@ public class CustomerController {
         }
         //Cus给课程评论失败, 返回错误信息
         return Result.error("Cus给课程评论失败");
+    }
+
+
+    //查询自己申请的课程
+    @PostMapping("/isapplyforclasses")
+    public Result commentclass(@RequestBody Customer cs ,@RequestParam(defaultValue = "1") Integer page,
+                               @RequestParam(defaultValue = "10") Integer pageSize){
+        log.info("查询自己申请的课程",cs.getId());
+        PageBean pageBean = iIntentionService.getapplyclass(cs,page,pageSize);
+        return Result.success(pageBean);
     }
 
 

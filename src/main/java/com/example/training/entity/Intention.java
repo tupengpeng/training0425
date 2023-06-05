@@ -8,7 +8,7 @@ public class Intention {
     private Integer courseId;
     private LocalDate intentionDate;
     private String evaluation;
-    private Integer isDeleted;
+    private Integer isdeleted;
 
     public Integer getId() {
         return id;
@@ -51,10 +51,10 @@ public class Intention {
     }
 
     public Integer getIsDeleted() {
-        return isDeleted;
+        return isdeleted;
     }
 
     public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
+        this.isdeleted = isDeleted;
     }
 }

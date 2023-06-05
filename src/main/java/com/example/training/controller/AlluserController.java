@@ -24,6 +24,7 @@ public class AlluserController {
     @Autowired
     private ICourseService iCourseService;
 
+    //分页查询招生计划
     @GetMapping("/enrollmentPlan/page")
     public Result page(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer pageSize){
@@ -32,22 +33,30 @@ public class AlluserController {
         return Result.success(pageBean);
     }
 
-    @GetMapping("/comment/getcommentclass")
-    public Result getcommentclass(@RequestBody Course cs,@RequestParam(defaultValue = "1") Integer page,
-                                  @RequestParam(defaultValue = "10") Integer pageSize){
-        log.info("获取课程评论");
-        PageBean pageBean = iCommentService.getcomment(cs,page,pageSize);
-        return Result.success(pageBean);
-    }
 
+    //获取课程列表
     @GetMapping("/course/getcourse")
-    public Result getcourse(@RequestBody Course cs,@RequestParam(defaultValue = "1") Integer page,
-                                  @RequestParam(defaultValue = "10") Integer pageSize){
+    public Result getcourse(@RequestBody Course cs,
+                            @RequestParam(defaultValue = "1") Integer page,
+                            @RequestParam(defaultValue = "10") Integer pageSize){
         log.info("获取课程列表");
         log.info("课程分页查询, 参数: {},{}",page,pageSize);
         PageBean pageBean = iCourseService.getCourse(cs,page,pageSize);
         return Result.success(pageBean);
     }
+
+
+    //获取课程评论
+    @GetMapping("/comment/getcommentclass")
+    public Result getcommentclass(@RequestBody Course cs,
+                                  @RequestParam(defaultValue = "1") Integer page,
+                                  @RequestParam(defaultValue = "10") Integer pageSize){
+        log.info("获取课程评论");
+        log.info("分页查询, 参数: {},{}",page,pageSize);
+        PageBean pageBean = iCommentService.getcomment(cs,page,pageSize);
+        return Result.success(pageBean);
+    }
+
 
 
 }

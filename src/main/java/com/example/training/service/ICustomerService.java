@@ -2,6 +2,7 @@ package com.example.training.service;
 
 import com.example.training.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.training.entity.Intention;
 
 import java.util.List;
 
@@ -22,5 +23,6 @@ public interface ICustomerService extends IService<Customer> {
     public boolean insertInf(Customer cs);
 
     public List<Customer> query(Customer cs);
+
 
 }
