@@ -1,12 +1,10 @@
 package com.example.training.controller;
 
-import com.example.training.entity.Course;
-import com.example.training.entity.Intention;
-import com.example.training.entity.PageBean;
-import com.example.training.entity.Result;
+import com.example.training.entity.*;
 import com.example.training.service.ICommentService;
 import com.example.training.service.ICourseService;
 import com.example.training.service.IEnrollmentPlanService;
+import com.example.training.service.IPromotionArticleService;
 import com.example.training.service.impl.CourseServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,8 @@ public class AlluserController {
     private ICommentService iCommentService;
     @Autowired
     private ICourseService iCourseService;
+    @Autowired
+    private IPromotionArticleService iPromotionArticleService;
 
     //分页查询招生计划
     @GetMapping("/enrollmentPlan/page")
@@ -57,6 +57,11 @@ public class AlluserController {
         return Result.success(pageBean);
     }
 
-
+//    //获取简章
+//    @PostMapping("/promotionArticle/getpromotionArticlepage")
+//    public Result pagePromotionArticle(@RequestBody PromotionArticle promotionArticle, Integer page, Integer pageSize) {
+//        PageBean pageBean = iPromotionArticleService.pagePromotionArticle(promotionArticle, page, pageSize);
+//        return Result.success(pageBean);
+//    }
 
 }

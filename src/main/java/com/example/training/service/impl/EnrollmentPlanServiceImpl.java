@@ -1,5 +1,6 @@
 package com.example.training.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.training.entity.EnrollmentPlan;
 import com.example.training.entity.PageBean;
 import com.example.training.mapper.CustomerMapper;
@@ -40,5 +41,32 @@ public class EnrollmentPlanServiceImpl extends ServiceImpl<EnrollmentPlanMapper,
         //封装PageBean对象
         PageBean pageBean = new PageBean(pg.getTotal(), pg.getResult());
         return pageBean;
+    }
+
+    @Override
+    public boolean updateplan(EnrollmentPlan enrollmentPlan) {
+        Integer id = enrollmentPlan.getId();
+        if (id == null) {
+            return false; // ID 为空，无法更新
+        }
+
+        UpdateWrapper<EnrollmentPlan> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", id)
+                .set(enrollmentPlan.getTitle() != null, "title", enrollmentPlan.getTitle())
+                .set(enrollmentPlan.getStartDate() != null, "start_date", enrollmentPlan.getStartDate())
+                .set(enrollmentPlan.getEndDate() != null, "end_date", enrollmentPlan.getEndDate())
+                .set(enrollmentPlan.getContent() != null, "content", enrollmentPlan.getContent());
+
+        return update(updateWrapper);
+    }
+
+    @Override
+    public boolean deleteplan(EnrollmentPlan en) {
+        return removeById(en.getId());
+    }
+
+    @Override
+    public boolean addplan(EnrollmentPlan en) {
+        return save(en);
     }
 }

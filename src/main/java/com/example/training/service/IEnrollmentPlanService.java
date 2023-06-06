@@ -18,4 +18,9 @@ import java.util.List;
 public interface IEnrollmentPlanService extends IService<EnrollmentPlan> {
     public PageBean pageEnrollmentPlan(Integer page, Integer pageSize);
 
+    public boolean updateplan(EnrollmentPlan en);
+
+    public boolean deleteplan(EnrollmentPlan en);
+
+    public boolean addplan(EnrollmentPlan en);
 }
