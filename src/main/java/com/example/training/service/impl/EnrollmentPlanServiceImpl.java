@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -31,8 +32,11 @@ public class EnrollmentPlanServiceImpl extends ServiceImpl<EnrollmentPlanMapper,
 
     @Override
     public PageBean pageEnrollmentPlan(Integer page, Integer pageSize) {
+        if (Objects.isNull(page) || Objects.isNull(pageSize)) {
+            throw new IllegalArgumentException("Page number or page size is null");
+        }
         //设置分页参数（页数，每页size）
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
 
         //执行查询
         List<EnrollmentPlan> enrList = enrollmentPlanMapper.selectList(null);
@@ -45,28 +49,37 @@ public class EnrollmentPlanServiceImpl extends ServiceImpl<EnrollmentPlanMapper,
 
     @Override
     public boolean updateplan(EnrollmentPlan enrollmentPlan) {
+        if (Objects.isNull(enrollmentPlan) || Objects.isNull(enrollmentPlan.getId())) {
+            throw new IllegalArgumentException("Enrollment plan or plan id is null");
+        }
         Integer id = enrollmentPlan.getId();
-        if (id == null) {
+        if (Objects.isNull(id)) {
             return false; // ID 为空，无法更新
         }
 
         UpdateWrapper<EnrollmentPlan> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", id)
-                .set(enrollmentPlan.getTitle() != null, "title", enrollmentPlan.getTitle())
-                .set(enrollmentPlan.getStartDate() != null, "start_date", enrollmentPlan.getStartDate())
-                .set(enrollmentPlan.getEndDate() != null, "end_date", enrollmentPlan.getEndDate())
-                .set(enrollmentPlan.getContent() != null, "content", enrollmentPlan.getContent());
+                .set(Objects.nonNull(enrollmentPlan.getTitle()), "title", enrollmentPlan.getTitle())
+                .set(Objects.nonNull(enrollmentPlan.getStartDate()), "start_date", enrollmentPlan.getStartDate())
+                .set(Objects.nonNull(enrollmentPlan.getEndDate()), "end_date", enrollmentPlan.getEndDate())
+                .set(Objects.nonNull(enrollmentPlan.getContent()), "content", enrollmentPlan.getContent());
 
         return update(updateWrapper);
     }
 
     @Override
     public boolean deleteplan(EnrollmentPlan en) {
+        if (Objects.isNull(en) || Objects.isNull(en.getId())) {
+            throw new IllegalArgumentException("Enrollment plan or plan id is null");
+        }
         return removeById(en.getId());
     }
 
     @Override
     public boolean addplan(EnrollmentPlan en) {
+        if (Objects.isNull(en)) {
+            throw new IllegalArgumentException("Enrollment plan is null");
+        }
         return save(en);
     }
 }

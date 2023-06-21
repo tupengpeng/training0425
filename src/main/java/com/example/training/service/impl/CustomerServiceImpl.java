@@ -2,6 +2,7 @@ package com.example.training.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.example.training.mapper.CustomerMapper;
 import com.example.training.entity.Customer;
 import com.example.training.mapper.CustomerMapper;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -33,6 +35,9 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public List<Customer> getCustomtoLogin(Customer cs) {
+        if (Objects.isNull(cs) || StringUtils.isBlank(cs.getPhone()) || StringUtils.isBlank(cs.getPassword())) {
+            throw new IllegalArgumentException("Phone number or password is null or blank");
+        }
         QueryWrapper<Customer> qw = new QueryWrapper<>();
         qw.eq("phone",cs.getPhone());
         qw.eq("password",cs.getPassword());
@@ -43,6 +48,9 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public boolean updateInf(Customer cs) {
+        if (Objects.isNull(cs) || Objects.isNull(cs.getId())) {
+            throw new IllegalArgumentException("Customer or customer id is null");
+        }
         UpdateWrapper<Customer> uw = new UpdateWrapper<>();
         uw.eq("id",cs.getId());
         if(customerMapper.update(cs,uw)==0){
@@ -55,6 +63,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public boolean insertInf(Customer cs) {
+        if (Objects.isNull(cs) || StringUtils.isBlank(cs.getPhone()) || StringUtils.isBlank(cs.getPassword())) {
+            throw new IllegalArgumentException("Phone number or password is null or blank");
+        }
+
         QueryWrapper<Customer> qw = new QueryWrapper<>();
         qw.eq("phone",cs.getPhone());
         qw.eq("password",cs.getPassword());
@@ -74,6 +86,9 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public List<Customer> query(Customer cs) {
+        if (Objects.isNull(cs) || StringUtils.isBlank(cs.getPhone())) {
+            throw new IllegalArgumentException("Phone number is null or blank");
+        }
         QueryWrapper<Customer> qw = new QueryWrapper<>();
         qw.eq("phone",cs.getPhone());
         List<Customer> cl = customerMapper.selectList(qw);
